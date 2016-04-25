@@ -59,13 +59,18 @@ class PercentMonster(Monster):
     def __init__(self, name):
         super().__init__(name)
         self.name = "PercentMonster"
-    nums = [10,20,40,80]
-    num = random.choice(nums)
-    nums2 = [10, 20, 40, 100]
-    num2  = random.choice(nums2)
-    q1 = "What is " , num, " percent of ", num2
-    a1 = int(num2 * (num/100))
-    print(a1)
+
+
+    def question(self):
+        nums = [10,20,40,80]
+        num = random.choice(nums)
+        nums2 = [10, 20, 40, 100]
+        num2  = random.choice(nums2)
+        q1 = "What is " , num, " percent of ", num2
+        a1 = int(num2 * (num/100))
+        print(a1)
+
+        return q1, a1
 
 
 class GeoMonster(Monster):
@@ -102,14 +107,21 @@ def decideMonster():
 
     return m1
 
-def answerQ(m):
-    pAnswer = input(m.q1)
+def answerQ(a,q,p):
+
+    pAnswer = (input(q))
+    if m is not GeoMonster:
+        pAnswer = int(pAnswer)
     print(pAnswer)
-    print(m.a1)
-    if pAnswer.__eq__(m.a1):
+    print(a)
+    if (pAnswer) == (a):
         print("Congratulations! You got the question right!")
-        m.hp -= 1
+        m.hp -= p.attack
         print("You attacked the monster and its hp is now " , m.hp)
+    else:
+        print("Sorry, you did not get the answer right :(")
+        p.hp -= m.getAttack()
+        print("The monster attacked you and your health is now " , p.hp)
 
 
 name = input("Enter a name for your player: ")
@@ -120,5 +132,10 @@ print("Player's attack points: ", p1.getAttack())
 print("Player's Level: ", p1.getLevel())
 
 m = decideMonster()
-answerQ(m)
+
+while m.hp > 0:
+    q1,a1 = m.question()
+    answerQ(a1,q1,p1)
+
+
 
