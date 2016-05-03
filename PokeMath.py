@@ -28,6 +28,7 @@ class Player:
     # returns: int hp
     def getHp(self):
         return self.hp
+    
 
     def setHp(self, hp):
         self.hp = hp
@@ -113,10 +114,25 @@ class GeoMonster(Monster):
         a1 = "square"
 
         return q1, a1
-
+    
+# Subclass of Monster class for geometry-related monsters
+class MultiMonster(Monster):
+    def __init__(self, name):
+        Monster.__init__(self, name)
+        self.name = "MultiMonster"
+        
+    def getType (self):
+        return(self.__class__)
+    
+    def question(self):
+        q1 = "What is 90 divded by 10?"
+        a1 = 9
+        
+        return q1, a1
+    
 #function to decide what monster the player will fight
 def decideMonster():
-    monsterChoice = (random.randint(0, 1)) #add more numbers for more types of monsters
+    monsterChoice = (random.randint(0, 2)) #add more numbers for more types of monsters
     #print(monsterChoice)
 
     if monsterChoice == 0:
@@ -125,9 +141,13 @@ def decideMonster():
         m1.attack = 2
     elif monsterChoice == 1:
         m1 = PercentMonster("Percentages")
-        m1.hp = 100
+        m1.hp = 20
         m1.attack = 3
         #print(m1.q1)
+    elif monsterChoice == 2:
+        m1 = MultiMonster("Multiplication")
+        m1.hp = 20
+        m1.attack = 4
 
     #Prints the monster's information
     print("Monster's name: " , m1.getName())
@@ -142,7 +162,7 @@ def decideMonster():
 #Player attacks if right, monster attacks if wrong
 def answerQ(a,q,p):
     pAnswer = (raw_input(q))
-    if m1.getType() != GeoMonster:
+    if m1.getType() != GeoMonster or MultiMonster:
         pAnswer = int(pAnswer)
     print(pAnswer)
     print(a)
