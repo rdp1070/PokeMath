@@ -1,4 +1,5 @@
 import random
+import math
 # Player class represents a player that moves through the game with attributes and behaviors
 
 class Player:
@@ -6,10 +7,14 @@ class Player:
     # Init method serves as a constructor
     # Creates a player with chosen name, base HP of 100, and base attack of 10
     def __init__(self, name, ):
+        """
+
+        :rtype : object
+        """
         self.name = name
         self.hp = 100
         self.attack = 10
-        self.level = 1;
+        self.level = 1
 
     #
     # getName method returns String of Player's name
@@ -58,8 +63,11 @@ class Monster:
 #child class of Monster for percentage questions
 class PercentMonster(Monster):
     def __init__(self, name):
-        super().__init__(name)
-        self.name = "PercentMonster"
+        Monster.__init__(self, name)
+        self.name = PercentMonster
+
+    def getType(self):
+        return self.__class__
 
     # Function to generate a percentage question
     # Returns: the question and answer to the question
@@ -67,9 +75,11 @@ class PercentMonster(Monster):
         nums = [10,20,40,80] #creating array of percentges
         num = random.choice(nums) #choosing random percentage
         nums2 = [10, 20, 40, 100]
+        print
         num2  = random.choice(nums2)
         q1 = "What is " , num, " percent of ", num2 #question string
-        a1 = int(num2 * (num/100)) #figuring out numerical answer
+        a1 = long(20 / 100) #figuring out numerical answer
+        #a1 = 10
         #print(a1)
 
         return q1, a1
@@ -79,12 +89,17 @@ class PercentMonster(Monster):
 
 class GeoMonster(Monster):
     def __init__(self, name):
-        super().__init__(name)
+        Monster.__init__(self, name)
         self.name = "GeoMonster"
+
+    def getType(self):
+        return(self.__class__)
 
     def question(self):
         q1 = "What shape has 4 sides?"
-        a1 = "square"
+        a1 = "square"\
+
+        return q1, a1
 
 #function to decide what monster the player will fight
 def decideMonster():
@@ -102,7 +117,7 @@ def decideMonster():
         #print(m1.q1)
 
     #Prints the monster's information
-    print("Monster's name: " + m1.getName())
+    print("Monster's name: " , m1.getName())
     print("Monster's HP: ", m1.getHp())
     print("Monster's attack stat: ", m1.getAttack())
 
@@ -113,8 +128,8 @@ def decideMonster():
 #Compares the input with the actual answer
 #Player attacks if right, monster attacks if wrong
 def answerQ(a,q,p):
-    pAnswer = (input(q))
-    if m is not GeoMonster:
+    pAnswer = (raw_input(q))
+    if m.getType() != GeoMonster:
         pAnswer = int(pAnswer)
     print(pAnswer)
     print(a)
@@ -129,7 +144,7 @@ def answerQ(a,q,p):
 
 
 # Creates a player and prints out their initial attributes
-name = input("Enter a name for your player: ")
+name = raw_input("Enter a name for your player: ")
 p1 = Player(name)
 print("Player's name: " + p1.getName())
 print("Player's hit point: ", p1.getHp())
