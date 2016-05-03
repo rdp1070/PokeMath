@@ -20,8 +20,7 @@ class Player:
     # getName method returns String of Player's name
     # returns: String name
     def getName(self):
-        return self.name
-
+        return self.name 
 
 
     #
@@ -39,7 +38,7 @@ class Player:
     def getAttack(self):
         return self.attack
 
-    def setArtack(self, attack):
+    def setAttack(self, attack):
         self.attack = attack
 
     # param: self
@@ -64,6 +63,9 @@ class Monster:
 
     def getHp(self):
         return self.hp
+    
+    def setHp(self, hp):
+        self.hp = hp
 
     def getAttack(self):
         return self.attack
@@ -108,7 +110,7 @@ class GeoMonster(Monster):
 
     def question(self):
         q1 = "What shape has 4 sides?"
-        a1 = "square"\
+        a1 = "square"
 
         return q1, a1
 
