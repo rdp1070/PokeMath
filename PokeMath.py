@@ -142,17 +142,17 @@ def decideMonster():
 #Player attacks if right, monster attacks if wrong
 def answerQ(a,q,p):
     pAnswer = (raw_input(q))
-    if m.getType() != GeoMonster:
+    if m1.getType() != GeoMonster:
         pAnswer = int(pAnswer)
     print(pAnswer)
     print(a)
     if (pAnswer) == (a):
         print("Congratulations! You got the question right!")
-        m.hp -= p.attack
-        print("You attacked the monster and its hp is now " , m.hp)
+        m1.setHp(m1.getHp() - p.getAttack())
+        print("You attacked the monster and its hp is now " , m1.getHp())
     else:
         print("Sorry, you did not get the answer right :(")
-        p.hp -= m.getAttack()
+        p.setHp(p.getHp() - m1.getAttack())
         print("The monster attacked you and your health is now " , p.hp)
 
 
@@ -164,12 +164,17 @@ print("Player's hit point: ", p1.getHp())
 print("Player's attack points: ", p1.getAttack())
 print("Player's Level: ", p1.getLevel())
 
-m = decideMonster()
+m1 = decideMonster()
 
 #main while loop to run program for now with current setup
-while m.hp > 0:
-    q1,a1 = m.question()
+# while the monster's hp is above zero.
+while p1.getHp() > 0 or p1.getLevel() < 4:
+    q1,a1 = m1.question()
     answerQ(a1,q1,p1)
+    # if the monster is dead, make a new monster
+    if m1.getHp() <= 0:
+        m1 = decideMonster()
+    
 
 
 
