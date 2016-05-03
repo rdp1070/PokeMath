@@ -22,11 +22,16 @@ class Player:
     def getName(self):
         return self.name
 
+
+
     #
     # getHp method returns int of Player's current HP
     # returns: int hp
     def getHp(self):
         return self.hp
+
+    def setHp(self, hp):
+        self.hp = hp
 
     #
     # getAttack method returns int of Player's attack stat
@@ -34,11 +39,17 @@ class Player:
     def getAttack(self):
         return self.attack
 
+    def setArtack(self, attack):
+        self.attack = attack
+
     # param: self
     # getLevel returns int of player's level
     # returns: int level
     def getLevel(self):
         return self.level
+
+    def setLevel(self, level):
+        self.level = level
 
 # Monster Superclass: contains all attributes and behaviors for individual monsters
 class Monster:
