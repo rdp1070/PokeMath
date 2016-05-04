@@ -179,9 +179,19 @@ def answerQ(a,q,p):
         p.setHp(p.getHp() - m1.getAttack())
         print("The monster attacked you and your health is now {0}".format(p.hp))
         print(("").format())
+    
+#do the things to start the game up
+def startGame():
+    print(" _____      _        __  __       _   _     ")
+    print("|  __ \    | |      |  \/  |     | | | |    ")
+    print("| |__) |__ | | _____| \  / | __ _| |_| |__  ")
+    print("|  ___/ _ \| |/ / _ \ |\/| |/ _` | __| '_ \ ")
+    print("| |  | (_) |   <  __/ |  | | (_| | |_| | | |")
+    print("|_|   \___/|_|\_\___|_|  |_|\__,_|\__|_| |_|")
 
+startGame()
 # Creates a player and prints out their initial attributes
-name = raw_input("Enter a name for your player: ")
+name = raw_input("Enter Your name: ")
 p1 = Player(name)
 print("Player's name: {0}".format(p1.getName()))
 print("Player's hit point: {0}".format(p1.getHp()))
