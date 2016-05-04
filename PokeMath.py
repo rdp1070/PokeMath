@@ -78,7 +78,7 @@ class Monster:
 class PercentMonster(Monster):
     def __init__(self, name):
         Monster.__init__(self, name)
-        self.name = PercentMonster
+        self.name = "PercentMonster"
 
     def getType(self):
         return self.__class__
@@ -91,7 +91,7 @@ class PercentMonster(Monster):
         nums2 = [10, 20, 40, 100]
         print
         num2  = random.choice(nums2)
-        q1 = "What is " , num1, " percent of ", num2 #question string
+        q1 = ("What is {0} percent of {1} ").format(num1, num2) #question string
         a1 = int((num1/100.0)*num2) #num1 is the percentage, which should mutltiply by num2
 
         return q1, a1
@@ -108,7 +108,7 @@ class GeoMonster(Monster):
         return(self.__class__)
 
     def question(self):
-        q1 = "What shape has 4 sides?"
+        q1 = "What shape has 4 sides? "
         a1 = "square"
 
         return q1, a1
@@ -123,7 +123,7 @@ class MultiMonster(Monster):
         return(self.__class__)
     
     def question(self):
-        q1 = "What is 90 divded by 10?"
+        q1 = "What is 90 divded by 10? "
         a1 = 9
         
         return q1, a1
@@ -151,6 +151,7 @@ def decideMonster():
     print("Monster's name: {0}".format(m1.getName()))
     print("Monster's HP: {0}".format(m1.getHp()))
     print("Monster's attack stat: {0}".format(m1.getAttack()))
+    print(("").format())
 
     return m1
 
@@ -160,20 +161,20 @@ def decideMonster():
 #Player attacks if right, monster attacks if wrong
 def answerQ(a,q,p):
     pAnswer = (raw_input(q))
-    print "DEBUG:", m1.getType()
     if m1.getType() != GeoMonster:
         pAnswer = int(pAnswer)
-    print(pAnswer)
-    print(a)
+    print("You said {0}".format(pAnswer))
+    print("The answer was {0}".format(a))
     if (pAnswer) == (a):
-        print("Congratulations! You got the question right!")
+        print("Congratulations! You got the question right!").format()
         m1.setHp(m1.getHp() - p.getAttack())
-        print("You attacked the monster and its hp is now " , m1.getHp())
+        print("You attacked the monster and its hp is now {0} ".format(m1.getHp()))
+        print(("").format())
     else:
-        print("Sorry, you did not get the answer right :(")
+        print("Sorry, you did not get the answer right :(").format()
         p.setHp(p.getHp() - m1.getAttack())
-        print("The monster attacked you and your health is now " , p.hp)
-
+        print("The monster attacked you and your health is now {0}".format(p.hp))
+        print(("").format())
 
 # Creates a player and prints out their initial attributes
 name = raw_input("Enter a name for your player: ")
@@ -182,6 +183,7 @@ print("Player's name: {0}".format(p1.getName()))
 print("Player's hit point: {0}".format(p1.getHp()))
 print("Player's attack points: {0}".format(p1.getAttack()))
 print("Player's Level: {0}".format(p1.getLevel()))
+print(("").format())
 
 m1 = decideMonster()
 
@@ -193,7 +195,3 @@ while p1.getHp() > 0 or p1.getLevel() < 4:
     # if the monster is dead, make a new monster
     if m1.getHp() <= 0:
         m1 = decideMonster()
-    
-
-
-
