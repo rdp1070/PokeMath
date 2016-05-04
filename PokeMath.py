@@ -87,14 +87,12 @@ class PercentMonster(Monster):
     # Returns: the question and answer to the question
     def question(self):
         nums = [10,20,40,80] #creating array of percentges
-        num = random.choice(nums) #choosing random percentage
+        num1 = random.choice(nums) #choosing random percentage
         nums2 = [10, 20, 40, 100]
         print
         num2  = random.choice(nums2)
-        q1 = "What is " , num, " percent of ", num2 #question string
-        a1 = long(20 / 100) #figuring out numerical answer
-        #a1 = 10
-        #print(a1)
+        q1 = "What is " , num1, " percent of ", num2 #question string
+        a1 = int((num1/100.0)*num2) #num1 is the percentage, which should mutltiply by num2
 
         return q1, a1
 
@@ -150,9 +148,9 @@ def decideMonster():
         m1.attack = 4
 
     #Prints the monster's information
-    print("Monster's name: " , m1.getName())
-    print("Monster's HP: ", m1.getHp())
-    print("Monster's attack stat: ", m1.getAttack())
+    print("Monster's name: {0}".format(m1.getName()))
+    print("Monster's HP: {0}".format(m1.getHp()))
+    print("Monster's attack stat: {0}".format(m1.getAttack()))
 
     return m1
 
@@ -162,7 +160,8 @@ def decideMonster():
 #Player attacks if right, monster attacks if wrong
 def answerQ(a,q,p):
     pAnswer = (raw_input(q))
-    if m1.getType() != GeoMonster or MultiMonster:
+    print "DEBUG:", m1.getType()
+    if m1.getType() != GeoMonster:
         pAnswer = int(pAnswer)
     print(pAnswer)
     print(a)
@@ -179,10 +178,10 @@ def answerQ(a,q,p):
 # Creates a player and prints out their initial attributes
 name = raw_input("Enter a name for your player: ")
 p1 = Player(name)
-print("Player's name: " + p1.getName())
-print("Player's hit point: ", p1.getHp())
-print("Player's attack points: ", p1.getAttack())
-print("Player's Level: ", p1.getLevel())
+print("Player's name: {0}".format(p1.getName()))
+print("Player's hit point: {0}".format(p1.getHp()))
+print("Player's attack points: {0}".format(p1.getAttack()))
+print("Player's Level: {0}".format(p1.getLevel()))
 
 m1 = decideMonster()
 
