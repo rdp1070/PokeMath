@@ -123,8 +123,12 @@ class MultiMonster(Monster):
         return(self.__class__)
     
     def question(self):
-        q1 = "What is 90 divded by 10? "
-        a1 = 9
+        nums1 = [1,2,3,4,5,6,7,8,9] #creating array of numbers to multiply
+        num1 = random.choice(nums1) #choosing random number to multiply
+        nums2 = [1,2,3,4,5,6,7,8,9,10]
+        num2  = random.choice(nums2)
+        q1 = ("What is {0} multiplied by {1}? ").format(num1, num2) #question string
+        a1 = int( num1 * num2 ) #What is num1 times num2
         
         return q1, a1
     
