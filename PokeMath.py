@@ -15,6 +15,7 @@ class Player:
         self.hp = 100
         self.attack = 10
         self.level = 1
+        self.experience = 0
 
     #
     # getName method returns String of Player's name
@@ -51,6 +52,12 @@ class Player:
     def setLevel(self, level):
         self.level = level
 
+    def setExp(self,exp):
+        self.experience = exp
+
+    def getExp(self):
+        return self.experience
+
 # Monster Superclass: contains all attributes and behaviors for individual monsters
 class Monster:
     def __init__(self, name):
@@ -70,6 +77,15 @@ class Monster:
 
     def getAttack(self):
         return self.attack
+
+    def setAttack(self,att):
+        self.attack = att
+
+    def getLevel(self):
+        return self.level
+
+    def setLevel(self,level):
+        self.level = level
 
     def question(self):
         pass
@@ -133,23 +149,33 @@ class MultiMonster(Monster):
         return q1, a1
     
 #function to decide what monster the player will fight
-def decideMonster():
+def decideMonster(p1):
     monsterChoice = (random.randint(0, 2)) #add more numbers for more types of monsters
     #print(monsterChoice)
 
     if monsterChoice == 0:
         m1 = GeoMonster("Geometry")
-        m1.hp = 20
-        m1.attack = 2
+
+
     elif monsterChoice == 1:
         m1 = PercentMonster("Percentages")
-        m1.hp = 20
-        m1.attack = 3
+
         #print(m1.q1)
     elif monsterChoice == 2:
         m1 = MultiMonster("Multiplication")
-        m1.hp = 20
-        m1.attack = 4
+
+    if p1.getLevel() == 1 :
+        m1.setLevel(1)
+        m1.setHp(10)
+
+    elif p1.getLevel() == 2:
+        m1.setLevel(2)
+        m1.setHp(20)
+        m1.setAttack(2)
+    elif p1.getLevel() == 3:
+        m1.setLevel(3)
+        m1.setHp(30)
+        m1.setAttack(3)
 
     #Prints the monster's information
     print("Monster's name: {0}".format(m1.getName()))
@@ -199,7 +225,7 @@ print("Player's attack points: {0}".format(p1.getAttack()))
 print("Player's Level: {0}".format(p1.getLevel()))
 print(("").format())
 
-m1 = decideMonster()
+m1 = decideMonster(p1)
 
 #main while loop to run program for now with current setup
 # while the monster's hp is above zero.
@@ -208,4 +234,24 @@ while p1.getHp() > 0 or p1.getLevel() < 4:
     answerQ(a1,q1,p1)
     # if the monster is dead, make a new monster
     if m1.getHp() <= 0:
-        m1 = decideMonster()
+        print("Woohoo! You killed the monster!")
+        oldexp = p1.getExp()
+        exp = m1.getLevel()
+        p1.setExp(exp + oldexp)
+        print("Your experience is now {0}".format(p1.getExp()))
+        if (10 <= p1.getExp() < 20):
+            p1.setLevel(2)
+            print("You leveled up to level 2!")
+        if (20 <= p1.getExp() < 30):
+            p1.setLevel(3)
+            print("You leveled up to level 3!")
+        if (30 <= p1.getExp() < 40):
+            p1.setLevel(4)
+            print("You leveled up to level 2!")
+        m1 = decideMonster(p1)
+
+if p1.getHp <= 0:
+    print("Sorry, you have met your fatal end to the brutality of mathematics.")
+
+else:
+    print("Yay, you have won the game!")
