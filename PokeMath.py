@@ -1,4 +1,8 @@
 import random
+import pygame
+
+pygame.display.set_mode([1024,768])
+
 
 import math
 # Player class represents a player that moves through the game with attributes and behaviors
@@ -250,6 +254,10 @@ while p1.getHp() > 0 or p1.getLevel() < 4:
             p1.setLevel(4)
             print("You leveled up to level 2!")
         m1 = decideMonster(p1)
+
+
+
+monster = pygame.image.load('')
 
 if p1.getHp <= 0:
     print("Sorry, you have met your fatal end to the brutality of mathematics.")
