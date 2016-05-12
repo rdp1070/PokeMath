@@ -1,14 +1,17 @@
 import random
+
 import pygame
-
-pygame.display.set_mode([1024,768])
-
-
+from pygame.locals import *
+import Question
 
 
 
 
-#sugar Imports
+
+
+
+
+"""#sugar Imports
 from sugar3.activity.activity import Activity
 from sugar3.activity.widgets import StopButton
 from sugar3.activity.widgets import ActivityButton
@@ -17,11 +20,8 @@ from sugar3.activity.widgets import ActivityButton
 # Gtk Import
 from gi.repository import Gtk
 from gettext import gettext as _
+"""
 
-
-
-
-import math
 # Player class represents a player that moves through the game with attributes and behaviors
 
 class Player:
@@ -124,15 +124,10 @@ class PercentMonster(Monster):
     # Function to generate a percentage question
     # Returns: the question and answer to the question
     def question(self):
-        nums = [10,20,40,80] #creating array of percentges
-        num1 = random.choice(nums) #choosing random percentage
-        nums2 = [10, 20, 40, 100]
-        print
-        num2  = random.choice(nums2)
-        q1 = ("What is {0} percent of {1} ").format(num1, num2) #question string
-        a1 = int((num1/100.0)*num2) #num1 is the percentage, which should mutltiply by num2
-
-        return q1, a1
+        if self.level == 1:
+            q1 = Question.PercentMonsterLevel1(self)
+            q1, a1, options = q1.makeQ()
+            return q1, a1, options
 
 
 #Subclass of Monster class for geometry-related monsters
@@ -149,7 +144,9 @@ class GeoMonster(Monster):
         q1 = "What shape has 4 sides? "
         a1 = "square"
 
-        return q1, a1
+        options=[]
+        return q1, a1,options
+
     
 # Subclass of Monster class for geometry-related monsters
 class MultiMonster(Monster):
@@ -167,8 +164,13 @@ class MultiMonster(Monster):
         num2  = random.choice(nums2)
         q1 = ("What is {0} multiplied by {1}? ").format(num1, num2) #question string
         a1 = int( num1 * num2 ) #What is num1 times num2
-        
-        return q1, a1
+
+        i = 0
+        options = []
+        while (i<4):
+                options.append(random.choice(nums1+nums2));
+                i+=1
+        return q1, a1,options
     
 #function to decide what monster the player will fight
 def decideMonster(p1):
@@ -249,10 +251,14 @@ print(("").format())
 
 m1 = decideMonster(p1)
 
+
+
 #main while loop to run program for now with current setup
 # while the monster's hp is above zero.
+
 while p1.getHp() > 0 or p1.getLevel() < 4:
-    q1,a1 = m1.question()
+    q1,a1,options = m1.question()
+    print(options)
     answerQ(a1,q1,p1)
     # if the monster is dead, make a new monster
     if m1.getHp() <= 0:
@@ -272,9 +278,6 @@ while p1.getHp() > 0 or p1.getLevel() < 4:
             print("You leveled up to level 2!")
         m1 = decideMonster(p1)
 
-
-
-monster = pygame.image.load('')
 
 if p1.getHp <= 0:
     print("Sorry, you have met your fatal end to the brutality of mathematics.")
