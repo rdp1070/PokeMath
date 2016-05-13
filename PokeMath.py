@@ -122,10 +122,13 @@ class PercentMonster(Monster):
     # Function to generate a percentage question
     # Returns: the question and answer to the question
     def question(self):
-        if self.level == 1:
+        if self.getLevel() == 1:
             q1 = Question.PercentMonsterLevel1(self)
             q1, a1, options = q1.makeQ()
             return q1, a1, options
+        elif self.getLevel() == 2:
+            q1 = Question.PercentMonsterLevel2(self)
+            q1,a1, options = q1.makeQ()
 
 
 #Subclass of Monster class for geometry-related monsters
@@ -139,11 +142,19 @@ class GeoMonster(Monster):
         return(self.__class__)
 
     def question(self):
-        q1 = "What shape has 4 sides? "
-        a1 = "square"
+        if self.getLevel() == 1:
+            q = Question.GeoMonsterLevel1(self)
+            q1,a1,options = q.makeQ()
+            return q1,a1,options
+        elif self.getLevel() == 2:
+            q = Question.GeoMonsterLevel2(self)
+            q1,a1,options = q.makeQ()
+            return q1,a1,options
+        elif self.getLevel() == 3:
+            q = Question.GeoMonsterLevel3(self)
+            q1,a1,options = q.makeQ()
+            return q1,a1,options
 
-        options=[]
-        return q1, a1,options
 
 
 # Subclass of Monster class for geometry-related monsters
@@ -156,19 +167,18 @@ class MultiMonster(Monster):
         return(self.__class__)
 
     def question(self):
-        nums1 = [1,2,3,4,5,6,7,8,9] #creating array of numbers to multiply
-        num1 = random.choice(nums1) #choosing random number to multiply
-        nums2 = [1,2,3,4,5,6,7,8,9,10]
-        num2  = random.choice(nums2)
-        q1 = ("What is {0} multiplied by {1}? ").format(num1, num2) #question string
-        a1 = int( num1 * num2 ) #What is num1 times num2
-
-        i = 0
-        options = []
-        while (i<4):
-                options.append(random.choice(nums1+nums2));
-                i+=1
-        return q1, a1,options
+        if self.getLevel() == 1:
+            q = Question.MultiMonsterLevel1(self)
+            q1,a1,options = q.makeQ()
+            return q1,a1,options
+        elif self.getLevel() == 2:
+            q = Question.MultiMonsterLevel2(self)
+            q1,a1,options = q.makeQ()
+            return q1,a1,options
+        elif self.getLevel() == 3:
+            q = Question.MultiMonsterLevel3(self)
+            q1,a1,options = q.makeQ()
+            return q1,a1,options
 
 #function to decide what monster the player will fight
 def decideMonster(p1):

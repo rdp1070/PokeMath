@@ -31,8 +31,14 @@ class PercentMonsterLevel1(Question):
         options.append(a1)
         print("Choose the correct answer: {0}").format(options)
         return q1, a1, options
+    
 
-    def makeQ2(self):
+class PercentMonsterLevel2(Question):
+    def __init__(self,monster):
+        Question.__init__(self,monster)
+        self.name = "PercentMonsterLevel2"
+
+    def makeQ(self):
         nums = [10, 20, 40, 80]  # creating array of percentges
         num1 = random.choice(nums)  # choosing random percentage
         nums2 = [10, 20, 40, 100]
