@@ -1,13 +1,25 @@
+
 import random
 
 import pygame
-from pygame.locals import * 
+from pygame.locals import *
 import Question
-from Question import *
 
 
 
 
+
+
+
+
+"""#sugar Imports
+from sugar3.activity.activity import Activity
+from sugar3.activity.widgets import StopButton
+from sugar3.activity.widgets import ActivityButton
+# Gtk Import
+from gi.repository import Gtk
+from gettext import gettext as _
+"""
 
 # Player class represents a player that moves through the game with attributes and behaviors
 
@@ -17,12 +29,11 @@ class Player:
     # Creates a player with chosen name, base HP of 100, and base attack of 10
     def __init__(self, name, ):
         """
-
         :rtype : object
         """
         self.name = name
         self.hp = 100
-        self.attack = 10
+        self.attack = 3
         self.level = 1
         self.experience = 0
 
@@ -30,7 +41,7 @@ class Player:
     # getName method returns String of Player's name
     # returns: String name
     def getName(self):
-        return self.name 
+        return self.name
 
 
     #
@@ -38,7 +49,7 @@ class Player:
     # returns: int hp
     def getHp(self):
         return self.hp
-    
+
 
     def setHp(self, hp):
         self.hp = hp
@@ -80,7 +91,7 @@ class Monster:
 
     def getHp(self):
         return self.hp
-    
+
     def setHp(self, hp):
         self.hp = hp
 
@@ -96,11 +107,68 @@ class Monster:
     def setLevel(self,level):
         self.level = level
 
-    def question(self, question):
-        self.question = question 
-    
-    def getQuestion(self):
-        return self.question
+    def question(self):
+        pass
+
+#child class of Monster for percentage questions
+class PercentMonster(Monster):
+    def __init__(self, name):
+        Monster.__init__(self, name)
+        self.name = "PercentMonster"
+
+    def getType(self):
+        return self.__class__
+
+    # Function to generate a percentage question
+    # Returns: the question and answer to the question
+    def question(self):
+        if self.level == 1:
+            q1 = Question.PercentMonsterLevel1(self)
+            q1, a1, options = q1.makeQ()
+            return q1, a1, options
+
+
+#Subclass of Monster class for geometry-related monsters
+
+class GeoMonster(Monster):
+    def __init__(self, name):
+        Monster.__init__(self, name)
+        self.name = "GeoMonster"
+
+    def getType(self):
+        return(self.__class__)
+
+    def question(self):
+        q1 = "What shape has 4 sides? "
+        a1 = "square"
+
+        options=[]
+        return q1, a1,options
+
+
+# Subclass of Monster class for geometry-related monsters
+class MultiMonster(Monster):
+    def __init__(self, name):
+        Monster.__init__(self, name)
+        self.name = "MultiMonster"
+
+    def getType (self):
+        return(self.__class__)
+
+    def question(self):
+        nums1 = [1,2,3,4,5,6,7,8,9] #creating array of numbers to multiply
+        num1 = random.choice(nums1) #choosing random number to multiply
+        nums2 = [1,2,3,4,5,6,7,8,9,10]
+        num2  = random.choice(nums2)
+        q1 = ("What is {0} multiplied by {1}? ").format(num1, num2) #question string
+        a1 = int( num1 * num2 ) #What is num1 times num2
+
+        i = 0
+        options = []
+        while (i<4):
+                options.append(random.choice(nums1+nums2));
+                i+=1
+        return q1, a1,options
 
 #function to decide what monster the player will fight
 def decideMonster(p1):
@@ -108,32 +176,26 @@ def decideMonster(p1):
     #print(monsterChoice)
 
     if monsterChoice == 0:
-        m1 = Monster("Geometry")
-        q1 = GeoMonsterLevel1(m1)
-        #q1 is a question object, makeQ returns the first question set.
-        m1.question(q1.makeQ())
+        m1 = GeoMonster("Geometry")
+
 
     elif monsterChoice == 1:
-        m1 = Monster("Percentages")
-        q1 = PercentMonsterLevel1(m1)
-        #q1 is a question object, makeQ returns the first question set.
-        m1.question(q1.makeQ())
+        m1 = PercentMonster("Percentages")
 
+        #print(m1.q1)
     elif monsterChoice == 2:
-        m1 = Monster("Multiplication")
-        q1 = MultiMonsterLevel1(m1)
-        #q1 is a question object, makeQ returns the first question set.
-        m1.question(q1.makeQ())
+        m1 = MultiMonster("Multiplication")
 
     if p1.getLevel() == 1 :
+        m1.setLevel(1)
         m1.setHp(10)
 
     elif p1.getLevel() == 2:
-        m1.Level2()
+        m1.setLevel(2)
         m1.setHp(20)
         m1.setAttack(2)
     elif p1.getLevel() == 3:
-        #m1.setLevel(3)
+        m1.setLevel(3)
         m1.setHp(30)
         m1.setAttack(3)
 
@@ -150,9 +212,8 @@ def decideMonster(p1):
 #Compares the input with the actual answer
 #Player attacks if right, monster attacks if wrong
 def answerQ(a,q,p):
-    print("Choose the correct answer: {0}").format(options)
     pAnswer = (raw_input(q))
-    if m1.getName() != "GeoMonster":
+    if m1.getType() != GeoMonster:
         pAnswer = int(pAnswer)
     print("You said {0}".format(pAnswer))
     print("The answer was {0}".format(a))
@@ -166,7 +227,7 @@ def answerQ(a,q,p):
         p.setHp(p.getHp() - m1.getAttack())
         print("The monster attacked you and your health is now {0}".format(p.hp))
         print(("").format())
-    
+
 #do the things to start the game up
 def startGame():
     print(" _____      _        __  __       _   _     ")
@@ -194,11 +255,9 @@ m1 = decideMonster(p1)
 # while the monster's hp is above zero.
 
 while p1.getHp() > 0 or p1.getLevel() < 4:
-    #m1.question is equal to a question answer options set. 
-    q1,a1,options = m1.question
-
+    q1,a1,options = m1.question()
+    print(options)
     answerQ(a1,q1,p1)
-
     # if the monster is dead, make a new monster
     if m1.getHp() <= 0:
         print("Woohoo! You killed the monster!")
