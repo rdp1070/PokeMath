@@ -11,7 +11,7 @@ import Question
 
 
 
-"""#sugar Imports
+#sugar Imports
 from sugar3.activity.activity import Activity
 from sugar3.activity.widgets import StopButton
 from sugar3.activity.widgets import ActivityButton
@@ -20,7 +20,7 @@ from sugar3.activity.widgets import ActivityButton
 # Gtk Import
 from gi.repository import Gtk
 from gettext import gettext as _
-"""
+
 
 # Player class represents a player that moves through the game with attributes and behaviors
 
