@@ -33,7 +33,7 @@ class Player:
         """
         self.name = name
         self.hp = 100
-        self.attack = 3
+        self.attack = 10
         self.level = 1
         self.experience = 0
 
@@ -129,6 +129,7 @@ class PercentMonster(Monster):
         elif self.getLevel() == 2:
             q1 = Question.PercentMonsterLevel2(self)
             q1,a1, options = q1.makeQ()
+            return q1,a1,options
 
 
 #Subclass of Monster class for geometry-related monsters
@@ -223,8 +224,10 @@ def decideMonster(p1):
 #Player attacks if right, monster attacks if wrong
 def answerQ(a,q,p):
     pAnswer = (raw_input(q))
-    if m1.getType() != GeoMonster:
+    if pAnswer.isdigit():
         pAnswer = int(pAnswer)
+    else:
+        pAnswer.lower()
     print("You said {0}".format(pAnswer))
     print("The answer was {0}".format(a))
     if (pAnswer) == (a):
@@ -264,7 +267,7 @@ m1 = decideMonster(p1)
 #main while loop to run program for now with current setup
 # while the monster's hp is above zero.
 
-while p1.getHp() > 0 or p1.getLevel() < 4:
+while p1.getHp() > 0 or p1.getLevel() <= 4:
     q1,a1,options = m1.question()
     print(options)
     answerQ(a1,q1,p1)

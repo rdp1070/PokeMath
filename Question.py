@@ -31,7 +31,7 @@ class PercentMonsterLevel1(Question):
         options.append(a1)
         print("Choose the correct answer: {0}").format(options)
         return q1, a1, options
-    
+
 
 class PercentMonsterLevel2(Question):
     def __init__(self,monster):
@@ -102,12 +102,15 @@ class GeoMonsterLevel2(Question):
         q1 = ("What kind of angle is a {0} degrees?").format(angle)
         options = ["Acute" , "Right" , "Obtuse"]
         if (angle < 90):
-            a1 = "Acute"
+            a1 = "acute"
         elif angle == 90:
-            a1 = "Right"
+            a1 = "right"
         elif angle > 90:
-            a1 = "Obtuse"
+            a1 = "obtuse"
         return q1,a1,options
+
+class GeoMonsterLevel3(Question):
+    angle = random.randint(0,180)
 
 # Subclass of Monster class for geometry-related monsters
 class MultiMonsterLevel1(Question):
@@ -131,7 +134,8 @@ class MultiMonsterLevel1(Question):
         return q1, a1, options
 
 
-    def makeQ2(self):
+class MultiMonsterLevel2(Question):
+    def makeQ(self):
         nums1 = [2,3,4,5,6,7,8,9,10] #creating array of numbers to multiply
         num1 = random.choice(nums1) #choosing random number to multiply
         nums2 = [2,3,4,5,6,7,8,9,10]
