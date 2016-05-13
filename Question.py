@@ -19,13 +19,17 @@ class PercentMonsterLevel1(Question):
         nums2 = [10, 20, 40, 100]
         print
         num2 = random.choice(nums2)
-        q1 = ("What is {0} percent of {1} ").format(num1, num2)  # question string
-        a1 = int((num1 / 100.0) * num2)  # num1 is the percentage, which should mutltiply by num2
+        q1 = ("What is {0} percent of {1}?").format(num1, num2)  # question string
         i = 0
         options = []
         while (i<4):
             options.append(random.choice(nums+nums2))
             i+=1
+
+
+        a1 = int((num1 / 100.0) * num2)  # num1 is the percentage, which should mutltiply by num2
+        options.append(a1)
+        print("Choose the correct answer: {0}").format(options)
         return q1, a1, options
 
     def makeQ2(self):
@@ -35,13 +39,17 @@ class PercentMonsterLevel1(Question):
         print
         num2 = random.choice(nums2)
         q1 = ("What is {0} percent of {1} ").format(num1, num2)  # question string
-        a1 = int((num1 / 100.0) * num2)  # num1 is the percentage, which should mutltiply by num2
 
         i = 0
         options = []
         while (i<4):
                 options.append(random.choice(nums+nums2))
                 i+=1
+
+        a1 = int((num1 / 100.0) * num2)  # num1 is the percentage, which should mutltiply by num2
+
+        options.append(a1)
+        print("Choose the correct answer: {0}").format(options)
         return q1, a1, options
     
 #Subclass of Monster class for geometry-related monsters
@@ -54,10 +62,25 @@ class GeoMonsterLevel1(Question):
         return(self.__class__)
 
     def makeQ(self):
-        q1 = "What shape has 4 equal sides? "
-        a1 = "square"
+        shapes = ["Square", "Rectangle", "Triangle", "Octagon", "Pentagon", ]
+        shape = random.sample(shapes, 1)[0]
+        q1 = ("How many sides does a {0} have?").format(shape)
 
-        options=[]
+        options = [3,4,3,8,5]
+
+
+
+        if shape == "Square" or shape =="Rectangle":
+            a1 = 4
+        elif shape == "Triangle":
+            a1 = 3
+        elif shape == "Octagon":
+            a1=8
+        elif shape =="Pentagon":
+            a1=5
+        options.append(a1)
+
+
         return q1, a1, options
     
     def makeQ2(self):

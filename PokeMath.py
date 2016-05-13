@@ -2,19 +2,11 @@ import random
 
 import pygame
 from pygame.locals import * 
-import Monster
-from Monster import *
+import Question
+from Question import *
 
 
-#sugar Imports
-from sugar3.activity.activity import Activity
-from sugar3.activity.widgets import StopButton
-from sugar3.activity.widgets import ActivityButton
 
-
-# Gtk Import
-from gi.repository import Gtk
-from gettext import gettext as _
 
 
 # Player class represents a player that moves through the game with attributes and behaviors
@@ -158,6 +150,7 @@ def decideMonster(p1):
 #Compares the input with the actual answer
 #Player attacks if right, monster attacks if wrong
 def answerQ(a,q,p):
+    print("Choose the correct answer: {0}").format(options)
     pAnswer = (raw_input(q))
     if m1.getName() != "GeoMonster":
         pAnswer = int(pAnswer)
@@ -203,8 +196,9 @@ m1 = decideMonster(p1)
 while p1.getHp() > 0 or p1.getLevel() < 4:
     #m1.question is equal to a question answer options set. 
     q1,a1,options = m1.question
-    print(options)
+
     answerQ(a1,q1,p1)
+
     # if the monster is dead, make a new monster
     if m1.getHp() <= 0:
         print("Woohoo! You killed the monster!")
