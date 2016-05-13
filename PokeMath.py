@@ -1,14 +1,9 @@
 import random
 
 import pygame
-from pygame.locals import *
-import Question
-
-
-
-
-
-
+from pygame.locals import * 
+import Monster
+from Monster import *
 
 
 #sugar Imports
@@ -109,95 +104,44 @@ class Monster:
     def setLevel(self,level):
         self.level = level
 
-    def question(self):
-        pass
-
-#child class of Monster for percentage questions
-class PercentMonster(Monster):
-    def __init__(self, name):
-        Monster.__init__(self, name)
-        self.name = "PercentMonster"
-
-    def getType(self):
-        return self.__class__
-
-    # Function to generate a percentage question
-    # Returns: the question and answer to the question
-    def question(self):
-        if self.level == 1:
-            q1 = Question.PercentMonsterLevel1(self)
-            q1, a1, options = q1.makeQ()
-            return q1, a1, options
-
-
-#Subclass of Monster class for geometry-related monsters
-
-class GeoMonster(Monster):
-    def __init__(self, name):
-        Monster.__init__(self, name)
-        self.name = "GeoMonster"
-
-    def getType(self):
-        return(self.__class__)
-
-    def question(self):
-        q1 = "What shape has 4 sides? "
-        a1 = "square"
-
-        options=[]
-        return q1, a1,options
-
+    def question(self, question):
+        self.question = question 
     
-# Subclass of Monster class for geometry-related monsters
-class MultiMonster(Monster):
-    def __init__(self, name):
-        Monster.__init__(self, name)
-        self.name = "MultiMonster"
-        
-    def getType (self):
-        return(self.__class__)
-    
-    def question(self):
-        nums1 = [1,2,3,4,5,6,7,8,9] #creating array of numbers to multiply
-        num1 = random.choice(nums1) #choosing random number to multiply
-        nums2 = [1,2,3,4,5,6,7,8,9,10]
-        num2  = random.choice(nums2)
-        q1 = ("What is {0} multiplied by {1}? ").format(num1, num2) #question string
-        a1 = int( num1 * num2 ) #What is num1 times num2
+    def getQuestion(self):
+        return self.question
 
-        i = 0
-        options = []
-        while (i<4):
-                options.append(random.choice(nums1+nums2));
-                i+=1
-        return q1, a1,options
-    
 #function to decide what monster the player will fight
 def decideMonster(p1):
     monsterChoice = (random.randint(0, 2)) #add more numbers for more types of monsters
     #print(monsterChoice)
 
     if monsterChoice == 0:
-        m1 = GeoMonster("Geometry")
-
+        m1 = Monster("Geometry")
+        q1 = GeoMonsterLevel1(m1)
+        #q1 is a question object, makeQ returns the first question set.
+        m1.question(q1.makeQ())
 
     elif monsterChoice == 1:
-        m1 = PercentMonster("Percentages")
+        m1 = Monster("Percentages")
+        q1 = PercentMonsterLevel1(m1)
+        #q1 is a question object, makeQ returns the first question set.
+        m1.question(q1.makeQ())
 
-        #print(m1.q1)
     elif monsterChoice == 2:
-        m1 = MultiMonster("Multiplication")
+        m1 = Monster("Multiplication")
+        q1 = MultiMonsterLevel1(m1)
+        #q1 is a question object, makeQ returns the first question set.
+        m1.question(q1.makeQ())
 
     if p1.getLevel() == 1 :
-        m1.setLevel(1)
         m1.setHp(10)
 
     elif p1.getLevel() == 2:
-        m1.setLevel(2)
+        m1.Level2()
         m1.setHp(20)
         m1.setAttack(2)
     elif p1.getLevel() == 3:
-        m1.setLevel(3)
+        #m1.setLevel(3)
         m1.setHp(30)
         m1.setAttack(3)
 
@@ -215,7 +159,7 @@ def decideMonster(p1):
 #Player attacks if right, monster attacks if wrong
 def answerQ(a,q,p):
     pAnswer = (raw_input(q))
-    if m1.getType() != GeoMonster:
+    if m1.getName() != "GeoMonster":
         pAnswer = int(pAnswer)
     print("You said {0}".format(pAnswer))
     print("The answer was {0}".format(a))
@@ -257,7 +201,8 @@ m1 = decideMonster(p1)
 # while the monster's hp is above zero.
 
 while p1.getHp() > 0 or p1.getLevel() < 4:
-    q1,a1,options = m1.question()
+    #m1.question is equal to a question answer options set. 
+    q1,a1,options = m1.question
     print(options)
     answerQ(a1,q1,p1)
     # if the monster is dead, make a new monster
