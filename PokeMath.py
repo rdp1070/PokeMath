@@ -126,7 +126,7 @@ class PercentMonster(Monster):
             q1 = Question.PercentMonsterLevel1(self)
             q1, a1, options = q1.makeQ()
             return q1, a1, options
-        elif self.getLevel() == 2:
+        elif self.getLevel() >= 2:
             q1 = Question.PercentMonsterLevel2(self)
             q1,a1, options = q1.makeQ()
             return q1,a1,options
@@ -203,11 +203,11 @@ def decideMonster(p1):
 
     elif p1.getLevel() == 2:
         m1.setLevel(2)
-        m1.setHp(20)
+        #m1.setHp(20)
         m1.setAttack(2)
-    elif p1.getLevel() == 3:
+    elif p1.getLevel() >= 3:
         m1.setLevel(3)
-        m1.setHp(30)
+        #m1.setHp(30)
         m1.setAttack(3)
 
     #Prints the monster's information
@@ -267,9 +267,9 @@ m1 = decideMonster(p1)
 #main while loop to run program for now with current setup
 # while the monster's hp is above zero.
 
-while p1.getHp() > 0 or p1.getLevel() <= 4:
+while p1.getHp() > 0 and p1.getExp() < 40:
     q1,a1,options = m1.question()
-    print(options)
+    #print(options)
     answerQ(a1,q1,p1)
     # if the monster is dead, make a new monster
     if m1.getHp() <= 0:
@@ -286,7 +286,7 @@ while p1.getHp() > 0 or p1.getLevel() <= 4:
             print("You leveled up to level 3!")
         if (30 <= p1.getExp() < 40):
             p1.setLevel(4)
-            print("You leveled up to level 2!")
+            print("You leveled up to level 4!")
         m1 = decideMonster(p1)
 
 
